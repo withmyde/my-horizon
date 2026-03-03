@@ -172,6 +172,7 @@ Horizon works great as a **GitHub Actions** cron job. See [`.github/workflows/da
 - [ ] Slack / Webhook notification
 - [ ] More source types (Twitter/X, Discord, etc.)
 - [ ] Custom scoring prompts per source
+- [ ] Docker deployment support
 
 ## Contributing
 
