@@ -183,6 +183,7 @@ Horizon 非常适合作为 **GitHub Actions** 定时任务运行。查看 [`.git
 - [x] Web UI 仪表板
 - [ ] 更多信息源（Twitter/X、Discord 等）
 - [ ] 按信息源自定义打分 Prompt
+- [ ] Docker 部署支持
 
 ## 贡献
 
