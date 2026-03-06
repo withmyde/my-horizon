@@ -199,6 +199,19 @@ Horizon 非常适合作为 **GitHub Actions** 定时任务运行。查看 [`.git
 | **Telegram** | 公开频道消息 | — |
 | **GitHub** | 用户动态 & 仓库 Release | — |
 
+## MCP 集成
+
+Horizon 内置了 [MCP](https://modelcontextprotocol.io/) Server，AI 助手可以直接通过它驱动抓取、打分、过滤、富化和摘要流程。
+
+```bash
+# 启动 MCP Server（stdio 模式）
+uv run horizon-mcp
+```
+
+可用工具包括 `hz_validate_config`、`hz_fetch_items`、`hz_score_items`、`hz_filter_items`、`hz_enrich_items`、`hz_generate_summary` 和 `hz_run_pipeline`。
+
+完整工具说明见 [`src/mcp/README.md`](src/mcp/README.md)，客户端接入见 [`src/mcp/integration.md`](src/mcp/integration.md)。
+
 ## 路线图
 
 - [x] 多源聚合（HN、RSS、Reddit、Telegram、GitHub）
