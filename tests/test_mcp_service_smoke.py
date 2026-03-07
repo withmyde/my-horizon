@@ -22,8 +22,6 @@ def make_item(item_id: str, score: float | None = None) -> ContentItem:
     )
     item.ai_score = score
     return item
-
-
 def test_validate_config_smoke(tmp_path: Path) -> None:
     repo_root = Path(__file__).resolve().parents[1]
     config_path = tmp_path / "config.json"
