@@ -75,8 +75,8 @@ class EmailManager:
                         if isinstance(response_part, tuple):
                             msg = email.message_from_bytes(response_part[1])
 
-                            subject = msg.get("Subject", "")
-                            if subject.strip().upper() != keyword.upper():
+                            subject = str(msg.get("Subject") or "").strip()
+                            if subject.upper() != keyword.upper():
                                 continue
 
                             sender = msg.get("From")
@@ -116,8 +116,8 @@ class EmailManager:
                         if isinstance(response_part, tuple):
                             msg = email.message_from_bytes(response_part[1])
 
-                            subject = msg.get("Subject", "")
-                            if subject.strip().upper() != unsub_keyword.upper():
+                            subject = str(msg.get("Subject") or "").strip()
+                            if subject.upper() != unsub_keyword.upper():
                                 continue
 
                             sender = msg.get("From")
