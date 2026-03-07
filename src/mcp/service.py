@@ -230,8 +230,8 @@ class HorizonPipelineService:
         run_id = self.run_store.create_run(run_id)
         since = datetime.now(timezone.utc) - timedelta(hours=hours)
 
-        raw_items = await orchestrator._fetch_all_sources(since)
-        merged_items = orchestrator._merge_cross_source_duplicates(raw_items)
+        raw_items = await orchestrator.fetch_all_sources(since)
+        merged_items = orchestrator.merge_cross_source_duplicates(raw_items)
 
         self.run_store.save_items(run_id, "raw", items_to_dicts(merged_items))
         meta = self.run_store.update_meta(
@@ -325,7 +325,7 @@ class HorizonPipelineService:
         if topic_dedup and important_items:
             storage = make_storage(ctx.runtime, ctx.config_path)
             orchestrator = make_orchestrator(ctx.runtime, ctx.config, storage)
-            important_items = orchestrator._merge_topic_duplicates(important_items)
+            important_items = orchestrator.merge_topic_duplicates(important_items)
 
         self.run_store.save_items(run_id, "filtered", items_to_dicts(important_items))
         meta = self.run_store.update_meta(
