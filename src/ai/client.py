@@ -2,7 +2,7 @@
 
 import os
 from abc import ABC, abstractmethod
-from typing import Optional
+from typing import Any
 
 from anthropic import AsyncAnthropic
 from openai import AsyncOpenAI
@@ -10,6 +10,61 @@ from google import genai
 from google.genai import types
 
 from ..models import AIConfig, AIProvider
+
+
+def _coerce_text_content(content: Any) -> str:
+    """Extract plain text from provider-specific response payloads."""
+
+    if content is None:
+        return ""
+    if isinstance(content, str):
+        return content.strip()
+    if isinstance(content, list):
+        parts = [_coerce_text_content(part) for part in content]
+        return "\n".join(part for part in parts if part).strip()
+    if isinstance(content, dict):
+        for key in ("text", "content", "output_text"):
+            if key in content:
+                return _coerce_text_content(content[key])
+        return ""
+
+    for attr in ("text", "content", "output_text"):
+        if hasattr(content, attr):
+            return _coerce_text_content(getattr(content, attr))
+
+    return str(content).strip()
+
+
+def _extract_openai_message_text(response: Any) -> str:
+    """Handle OpenAI-compatible responses that may return structured content."""
+
+    choices = getattr(response, "choices", None) or []
+    if not choices:
+        text = _coerce_text_content(getattr(response, "output_text", None))
+        if text:
+            return text
+        raise ValueError("OpenAI response did not include any choices.")
+
+    message = getattr(choices[0], "message", None)
+    if message is None:
+        raise ValueError("OpenAI response is missing the first choice message.")
+
+    text = _coerce_text_content(getattr(message, "content", None))
+    if text:
+        return text
+
+    refusal = _coerce_text_content(getattr(message, "refusal", None))
+    if refusal:
+        raise ValueError(f"OpenAI response refused the request: {refusal}")
+
+    if getattr(message, "tool_calls", None):
+        raise ValueError("OpenAI response returned tool calls instead of text content.")
+
+    text = _coerce_text_content(getattr(response, "output_text", None))
+    if text:
+        return text
+
+    raise ValueError("OpenAI response did not include text content.")
 
 
 class AIClient(ABC):
@@ -84,7 +139,10 @@ class AnthropicClient(AIClient):
             messages=[{"role": "user", "content": user}]
         )
 
-        return message.content[0].text
+        text = _coerce_text_content(message.content)
+        if not text:
+            raise ValueError("Anthropic response did not include text content.")
+        return text
 
 
 class OpenAIClient(AIClient):
@@ -136,7 +194,7 @@ class OpenAIClient(AIClient):
             max_tokens=max_tokens
         )
 
-        return response.choices[0].message.content
+        return _extract_openai_message_text(response)
 
 
 class GeminiClient(AIClient):
@@ -185,7 +243,15 @@ class GeminiClient(AIClient):
             )
         )
 
-        return response.text
+        text = _coerce_text_content(getattr(response, "text", None))
+        if text:
+            return text
+
+        text = _coerce_text_content(getattr(response, "candidates", None))
+        if text:
+            return text
+
+        raise ValueError("Gemini response did not include text content.")
 
 
 def create_ai_client(config: AIConfig) -> AIClient:

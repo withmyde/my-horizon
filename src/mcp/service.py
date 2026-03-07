@@ -363,7 +363,25 @@ class HorizonPipelineService:
         )
 
         if not items:
-            raise HorizonMcpError(code="HZ_EMPTY_INPUT", message="No items available for enrichment.")
+            self.run_store.save_items(run_id, "enriched", [])
+            meta = self.run_store.update_meta(
+                run_id,
+                {
+                    "enriched_count": 0,
+                    "citation_count": 0,
+                    "enrich_skipped": True,
+                    "enrich_skipped_reason": "empty_input",
+                },
+            )
+            return {
+                "run_id": run_id,
+                "enriched": 0,
+                "citation_count": 0,
+                "artifact": str((self.run_store.run_dir(run_id) / "enriched_items.json").resolve()),
+                "meta": meta,
+                "skipped": True,
+                "reason": "empty_input",
+            }
 
         ai_client = ctx.runtime.create_ai_client(ctx.config.ai)
         enricher = ctx.runtime.ContentEnricher(ai_client)
@@ -380,6 +398,7 @@ class HorizonPipelineService:
             {
                 "enriched_count": len(items),
                 "citation_count": citation_count,
+                "enrich_skipped": False,
             },
         )
 
@@ -483,7 +502,7 @@ class HorizonPipelineService:
 
         enrich_result: dict[str, Any] | None = None
         stage_for_summary = "filtered"
-        if enrich:
+        if enrich and filter_result["kept"] > 0:
             enrich_result = await self.enrich_items(
                 run_id=run_id,
                 source_stage="filtered",
@@ -491,6 +510,14 @@ class HorizonPipelineService:
                 config_path=config_path,
             )
             stage_for_summary = "enriched"
+        elif enrich:
+            enrich_result = {
+                "run_id": run_id,
+                "enriched": 0,
+                "citation_count": 0,
+                "skipped": True,
+                "reason": "empty_filtered_stage",
+            }
 
         ctx, _, _ = self._build_context(
             horizon_path=horizon_path,

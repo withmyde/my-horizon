@@ -1,7 +1,8 @@
 """Content analysis using AI."""
 
 import json
-from typing import List
+import re
+from typing import Any, List
 from tenacity import retry, stop_after_attempt, wait_exponential
 from rich.progress import Progress, SpinnerColumn, BarColumn, TextColumn, MofNCompleteColumn
 
@@ -119,22 +120,89 @@ class ContentAnalyzer:
             temperature=0.3
         )
 
-        # Parse JSON response
-        try:
-            result = json.loads(response)
-        except json.JSONDecodeError:
-            # Try to extract JSON from markdown code block
-            if "```json" in response:
-                json_str = response.split("```json")[1].split("```")[0].strip()
-                result = json.loads(json_str)
-            elif "```" in response:
-                json_str = response.split("```")[1].split("```")[0].strip()
-                result = json.loads(json_str)
-            else:
-                raise ValueError(f"Invalid JSON response: {response}")
+        result = self._parse_json_response(response)
 
         # Update item with analysis results
-        item.ai_score = float(result.get("score", 0))
-        item.ai_reason = result.get("reason", "")
-        item.ai_summary = result.get("summary", item.title)
-        item.ai_tags = result.get("tags", [])
+        item.ai_score = self._normalize_score(result.get("score", 0))
+        item.ai_reason = self._normalize_text(result.get("reason", ""))
+        item.ai_summary = self._normalize_text(result.get("summary", item.title)) or item.title
+        item.ai_tags = self._normalize_tags(result.get("tags", []))
+
+    @staticmethod
+    def _parse_json_response(response: str) -> dict[str, Any]:
+        """Extract a JSON object from raw model output."""
+
+        text = ContentAnalyzer._clean_response_text(response)
+        candidates: list[str] = []
+
+        if text:
+            candidates.append(text)
+
+        fenced_blocks = re.findall(r"```(?:json)?\s*(.*?)```", text, flags=re.IGNORECASE | re.DOTALL)
+        candidates.extend(block.strip() for block in fenced_blocks if block.strip())
+
+        start = text.find("{")
+        end = text.rfind("}")
+        if start != -1 and end != -1 and end > start:
+            candidates.append(text[start:end + 1].strip())
+
+        seen: set[str] = set()
+        for candidate in candidates:
+            if not candidate or candidate in seen:
+                continue
+            seen.add(candidate)
+            try:
+                payload = json.loads(candidate)
+            except json.JSONDecodeError:
+                continue
+            if not isinstance(payload, dict):
+                raise ValueError(f"Expected JSON object response, got {type(payload).__name__}.")
+            return payload
+
+        raise ValueError(f"Invalid JSON response: {text}")
+
+    @staticmethod
+    def _clean_response_text(response: str) -> str:
+        text = response.strip()
+        text = re.sub(r"<think>.*?</think>", "", text, flags=re.IGNORECASE | re.DOTALL)
+        return text.strip()
+
+    @staticmethod
+    def _normalize_score(score: Any) -> float:
+        if isinstance(score, (int, float)):
+            value = float(score)
+        elif isinstance(score, str):
+            match = re.search(r"-?\d+(?:\.\d+)?", score)
+            if not match:
+                raise ValueError(f"Invalid score value: {score}")
+            value = float(match.group(0))
+        else:
+            raise ValueError(f"Invalid score type: {type(score).__name__}")
+
+        return max(0.0, min(10.0, value))
+
+    @staticmethod
+    def _normalize_text(value: Any) -> str:
+        if value is None:
+            return ""
+        if isinstance(value, str):
+            return value.strip()
+        if isinstance(value, (int, float)):
+            return str(value)
+        return json.dumps(value, ensure_ascii=False)
+
+    @staticmethod
+    def _normalize_tags(tags: Any) -> list[str]:
+        if tags is None:
+            return []
+        if isinstance(tags, str):
+            parts = re.split(r"[,/\n]", tags)
+            return [part.strip() for part in parts if part.strip()]
+        if isinstance(tags, list):
+            normalized = []
+            for tag in tags:
+                text = ContentAnalyzer._normalize_text(tag)
+                if text:
+                    normalized.append(text)
+            return normalized
+        return [ContentAnalyzer._normalize_text(tags)] if tags else []
