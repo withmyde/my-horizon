@@ -140,6 +140,66 @@ class OpenAIClient(AIClient):
         return response.choices[0].message.content
 
 
+class MiniMaxClient(AIClient):
+    """Client for MiniMax models via OpenAI-compatible API."""
+
+    def __init__(self, config: AIConfig):
+        """Initialize MiniMax client.
+
+        Args:
+            config: AI configuration
+        """
+        api_key = os.getenv(config.api_key_env)
+        if not api_key:
+            raise ValueError(f"Missing API key: {config.api_key_env}")
+
+        kwargs = {
+            "api_key": api_key,
+            "base_url": config.base_url or "https://api.minimax.io/v1",
+        }
+
+        self.client = AsyncOpenAI(**kwargs)
+        self.model = config.model
+        self.max_tokens = config.max_tokens
+
+    async def complete(
+        self,
+        system: str,
+        user: str,
+        temperature: float = 0.3,
+        max_tokens: int = 4096
+    ) -> str:
+        """Generate completion using MiniMax.
+
+        MiniMax requires temperature in (0.0, 1.0] and does not support
+        response_format, so we rely on prompt engineering for JSON output.
+
+        Args:
+            system: System prompt
+            user: User prompt
+            temperature: Sampling temperature
+            max_tokens: Maximum tokens to generate
+
+        Returns:
+            str: Generated text
+        """
+        # MiniMax temperature must be in (0.0, 1.0]; clamp 0 to a small value
+        if temperature <= 0:
+            temperature = 0.01
+
+        response = await self.client.chat.completions.create(
+            model=self.model,
+            messages=[
+                {"role": "system", "content": system},
+                {"role": "user", "content": user}
+            ],
+            temperature=temperature,
+            max_tokens=max_tokens,
+        )
+
+        return response.choices[0].message.content
+
+
 class GeminiClient(AIClient):
     """Client for Google Gemini models."""
 
@@ -210,5 +270,7 @@ def create_ai_client(config: AIConfig) -> AIClient:
         return GeminiClient(config)
     elif config.provider == AIProvider.DOUBAO:
         return OpenAIClient(config)
+    elif config.provider == AIProvider.MINIMAX:
+        return MiniMaxClient(config)
     else:
         raise ValueError(f"Unsupported AI provider: {config.provider}")

@@ -18,6 +18,7 @@
 ![Gemini](https://img.shields.io/badge/Gemini-8E75B2?style=flat-square&logo=google&logoColor=white)
 ![DeepSeek](https://img.shields.io/badge/DeepSeek-0A6DC2?style=flat-square)
 ![Doubao](https://img.shields.io/badge/Doubao-00D6C2?style=flat-square)
+![MiniMax](https://img.shields.io/badge/MiniMax-FF6F00?style=flat-square)
 ![OpenClaw](https://img.shields.io/badge/OpenClaw-C83232?style=flat-square)
 
 Horizon collects news from multiple customizable sources, uses AI to score and filter them, and generates a daily briefing — complete with summaries, community discussions, and background explanations in both English and Chinese.
@@ -52,7 +53,7 @@ Horizon collects news from multiple customizable sources, uses AI to score and f
 ## Features
 
 - **📡 Multi-Source Aggregation** — Collects from Hacker News, RSS feeds, Reddit, Telegram channels, and GitHub (releases & user events)
-- **🤖 AI-Powered Scoring** — Uses Claude, GPT-4, Gemini, DeepSeek, Doubao, or any OpenAI-compatible API to rate each item 0-10, filtering out the noise
+- **🤖 AI-Powered Scoring** — Uses Claude, GPT-4, Gemini, DeepSeek, Doubao, MiniMax, or any OpenAI-compatible API to rate each item 0-10, filtering out the noise
 - **🌐 Bilingual Summaries** — Generates daily reports in both English and Chinese
 - **🔍 Content Enrichment** — Searches the web to provide background knowledge for unfamiliar concepts
 - **💬 Community Voices** — Collects and summarizes discussions from comments on HackerNews, Reddit, etc.
@@ -130,7 +131,7 @@ Here's what a config looks like:
 ```jsonc
 {
   "ai": {
-    "provider": "openai",       // or "anthropic", "gemini", "doubao"
+    "provider": "openai",       // or "anthropic", "gemini", "doubao", "minimax"
     "model": "gpt-4",
     "api_key_env": "OPENAI_API_KEY",
     "languages": ["en", "zh"]   // bilingual output
