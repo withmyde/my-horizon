@@ -104,7 +104,6 @@ class ContentEnricher:
             response = await self.client.complete(
                 system=CONCEPT_EXTRACTION_SYSTEM,
                 user=user_prompt,
-                temperature=0.3,
             )
             result = self._parse_json_response(response)
             if result is None:
@@ -173,7 +172,6 @@ class ContentEnricher:
         response = await self.client.complete(
             system=CONTENT_ENRICHMENT_SYSTEM,
             user=user_prompt,
-            temperature=0.4,
         )
 
         # Parse JSON response with robust fallback

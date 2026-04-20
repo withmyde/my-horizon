@@ -45,7 +45,6 @@ async def get_ai_recommendations(
         response = await client.complete(
             system=RECOMMEND_SYSTEM,
             user=user_prompt,
-            temperature=0.5,
         )
     except Exception:
         return []

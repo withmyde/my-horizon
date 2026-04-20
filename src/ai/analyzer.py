@@ -126,7 +126,6 @@ class ContentAnalyzer:
         response = await self.client.complete(
             system=CONTENT_ANALYSIS_SYSTEM,
             user=user_prompt,
-            temperature=0.3
         )
 
         # Parse JSON response with robust fallback

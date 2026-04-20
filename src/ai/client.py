@@ -21,16 +21,16 @@ class AIClient(ABC):
         self,
         system: str,
         user: str,
-        temperature: float = 0.3,
-        max_tokens: int = 4096
+        temperature: Optional[float] = None,
+        max_tokens: Optional[int] = None,
     ) -> str:
         """Generate completion from AI model.
 
         Args:
             system: System prompt
             user: User prompt
-            temperature: Sampling temperature
-            max_tokens: Maximum tokens to generate
+            temperature: Optional sampling temperature override
+            max_tokens: Optional maximum tokens override
 
         Returns:
             str: Generated completion text
@@ -57,14 +57,15 @@ class AnthropicClient(AIClient):
 
         self.client = AsyncAnthropic(**kwargs)
         self.model = config.model
+        self.temperature = config.temperature
         self.max_tokens = config.max_tokens
 
     async def complete(
         self,
         system: str,
         user: str,
-        temperature: float = 0.3,
-        max_tokens: int = 4096
+        temperature: Optional[float] = None,
+        max_tokens: Optional[int] = None,
     ) -> str:
         """Generate completion using Claude.
 
@@ -77,6 +78,9 @@ class AnthropicClient(AIClient):
         Returns:
             str: Generated text
         """
+        temperature = self.temperature if temperature is None else temperature
+        max_tokens = self.max_tokens if max_tokens is None else max_tokens
+
         message = await self.client.messages.create(
             model=self.model,
             max_tokens=max_tokens,
@@ -113,14 +117,15 @@ class OpenAIClient(AIClient):
 
         self.client = AsyncOpenAI(**kwargs)
         self.model = config.model
+        self.temperature = config.temperature
         self.max_tokens = config.max_tokens
 
     async def complete(
         self,
         system: str,
         user: str,
-        temperature: float = 0.3,
-        max_tokens: int = 4096
+        temperature: Optional[float] = None,
+        max_tokens: Optional[int] = None,
     ) -> str:
         """Generate completion using OpenAI.
 
@@ -133,6 +138,9 @@ class OpenAIClient(AIClient):
         Returns:
             str: Generated text
         """
+        temperature = self.temperature if temperature is None else temperature
+        max_tokens = self.max_tokens if max_tokens is None else max_tokens
+
         response = await self.client.chat.completions.create(
             model=self.model,
             messages=[
@@ -173,14 +181,15 @@ class MiniMaxClient(AIClient):
 
         self.client = AsyncOpenAI(**kwargs)
         self.model = config.model
+        self.temperature = config.temperature
         self.max_tokens = config.max_tokens
 
     async def complete(
         self,
         system: str,
         user: str,
-        temperature: float = 0.3,
-        max_tokens: int = 4096
+        temperature: Optional[float] = None,
+        max_tokens: Optional[int] = None,
     ) -> str:
         """Generate completion using MiniMax.
 
@@ -196,6 +205,9 @@ class MiniMaxClient(AIClient):
         Returns:
             str: Generated text
         """
+        temperature = self.temperature if temperature is None else temperature
+        max_tokens = self.max_tokens if max_tokens is None else max_tokens
+
         # MiniMax temperature must be in (0.0, 1.0]; clamp 0 to a small value
         if temperature <= 0:
             temperature = 0.01
@@ -238,14 +250,15 @@ class AliClient(AIClient):
         }
         self.client = AsyncOpenAI(**kwargs)
         self.model = config.model
+        self.temperature = config.temperature
         self.max_tokens = config.max_tokens
 
     async def complete(
         self,
         system: str,
         user: str,
-        temperature: float = 0.3,
-        max_tokens: int = 4096
+        temperature: Optional[float] = None,
+        max_tokens: Optional[int] = None,
     ) -> str:
         """Generate completion using DashScope.
 
@@ -258,6 +271,9 @@ class AliClient(AIClient):
         Returns:
             str: Generated text
         """
+        temperature = self.temperature if temperature is None else temperature
+        max_tokens = self.max_tokens if max_tokens is None else max_tokens
+
         response = await self.client.chat.completions.create(
             model=self.model,
             messages=[
@@ -293,8 +309,8 @@ class GeminiClient(AIClient):
         self,
         system: str,
         user: str,
-        temperature: float = 0.3,
-        max_tokens: int = 4096
+        temperature: Optional[float] = None,
+        max_tokens: Optional[int] = None,
     ) -> str:
         """Generate completion using Gemini.
 
@@ -307,6 +323,9 @@ class GeminiClient(AIClient):
         Returns:
             str: Generated text
         """
+        temperature = self.temperature if temperature is None else temperature
+        max_tokens = self.max_tokens if max_tokens is None else max_tokens
+
         response = await self.client.aio.models.generate_content(
             model=self.model,
             contents=user,
