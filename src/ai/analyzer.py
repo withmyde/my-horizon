@@ -31,6 +31,10 @@ class ContentAnalyzer:
         items: List[ContentItem],
         batch_size: int = 10
     ) -> List[ContentItem]:
+        import asyncio, os
+        # Throttle between items to respect free-tier RPM limits.
+        # Gemini AI Studio free tier: ~15 RPM on flash-lite. 4.5s spacing = ~13 RPM, safe margin.
+        throttle_sec = float(os.environ.get("HORIZON_THROTTLE_SEC", "4.5"))
         analyzed_items = []
 
         with Progress(
@@ -55,6 +59,8 @@ class ContentAnalyzer:
                         item.ai_summary = item.title
                         analyzed_items.append(item)
                     progress.advance(task)
+                    if throttle_sec > 0:
+                        await asyncio.sleep(throttle_sec)
 
         return analyzed_items
 
