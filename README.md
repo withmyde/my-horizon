@@ -1,3 +1,5 @@
+[![MseeP.ai Security Assessment Badge](https://mseep.net/pr/thysrael-horizon-badge.png)](https://mseep.ai/app/thysrael-horizon)
+
 <div align="center">
 
 # 🌅 Horizon
