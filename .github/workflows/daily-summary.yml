@@ -40,10 +40,6 @@ jobs:
           # Email Configuration (QQ Mail)
           EMAIL_PASSWORD: ${{ secrets.EMAIL_PASS }}
 
-          # Proxy Configuration (Clash)
-          HTTP_PROXY: http://localhost:7890
-          HTTPS_PROXY: http://localhost:7890
-
           # LWN Key (if used)
           LWN_KEY: ${{ secrets.LWN_KEY }}
 
