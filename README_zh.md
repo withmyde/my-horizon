@@ -4,6 +4,15 @@
 
 **你只需享受新闻，剩下交给 Horizon。**
 
+> 📌 **Tommy983398 定制版本** - 基于 [Thysrael/Horizon](https://github.com/Thysrael/Horizon)
+>
+> 🔥 新增功能：
+> - **arXiv 论文抓取**：每天自动获取 5 篇 cs.AI 最新论文
+> - **增强订阅系统**：邮件标题 SUBSCRIBE/UNSUBSCRIBE 订阅/退订
+> - **定时自动运行**：北京时间每天 08:00 自动推送
+>
+> 📖 [部署指南](DEPLOYMENT_GUIDE.md) | [English](README.md)
+
 [![License](https://img.shields.io/badge/license-MIT-green.svg?style=flat-square)](LICENSE)
 [![uv](https://img.shields.io/endpoint?url=https://raw.githubusercontent.com/astral-sh/uv/main/assets/badge/v0.json&style=flat-square)](https://github.com/astral-sh/uv)
 [![Daily Summary](https://github.com/Thysrael/Horizon/actions/workflows/deploy-docs.yml/badge.svg?style=flat-square)](https://thysrael.github.io/Horizon/)
