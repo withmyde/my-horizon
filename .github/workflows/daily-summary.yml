@@ -1,0 +1,65 @@
+name: Daily Horizon Summary
+
+on:
+  schedule:
+    # UTC 00:00 = 北京时间 08:00
+    - cron: '0 0 * * *'
+  workflow_dispatch:  # Allow manual trigger
+
+jobs:
+  daily-summary:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write  # Needed to commit changes
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Install uv
+        uses: astral-sh/setup-uv@v3
+
+      - name: Install dependencies
+        run: uv sync
+
+      - name: Configure Git email
+        run: |
+          git config --local user.email "actions@github.com"
+          git config --local user.name "GitHub Actions"
+
+      - name: Run Horizon
+        env:
+          # AI Provider Configuration (SiliconFlow)
+          OPENAI_API_KEY: ${{ secrets.SILICONFLOW_API_KEY }}
+
+          # Email Configuration (QQ Mail)
+          EMAIL_PASSWORD: ${{ secrets.EMAIL_PASS }}
+
+          # Proxy Configuration (Clash)
+          HTTP_PROXY: http://localhost:7890
+          HTTPS_PROXY: http://localhost:7890
+          http_proxy: http://localhost:7890
+          https_proxy: http://localhost:7890
+
+          # LWN Key (if used)
+          LWN_KEY: ${{ secrets.LWN_KEY }}
+
+        run: uv run horizon --hours 48
+
+      - name: Set current date as environment variable
+        run: echo "DATE=$(date +'%Y-%m-%d')" >> $GITHUB_ENV
+
+      - name: Deploy to GitHub Pages
+        uses: peaceiris/actions-gh-pages@v4
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_dir: ./docs
+          keep_files: true  # Keep existing summaries on gh-pages branch
+          commit_message: "📝 Daily Summary: ${{ env.DATE }}"
+          publish_branch: gh-pages
+          enable_jekyll: true
