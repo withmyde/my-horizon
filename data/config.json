@@ -1,10 +1,10 @@
 {
   "version": "1.0",
   "ai": {
-    "provider": "openai",
-    "model": "deepseek-v4-pro",
-    "base_url": "https://api.deepseek.com",
-    "api_key_env": "OPENAI_API_KEY",
+    "provider": "anthropic",
+    "model": "claude-sonnet-4-6",
+    "base_url": "https://open.bigmodel.cn/api/anthropic",
+    "api_key_env": "ANTHROPIC_API_KEY",
     "temperature": 0.3,
     "max_tokens": 8192,
     "languages": [
@@ -59,7 +59,7 @@
       {
         "name": "LWN.net",
         "url": "https://lwn.net/headlines/full_text?key=${LWN_KEY}",
-        "enabled": true,
+        "enabled": false,
         "category": "linux-kernel"
       }
     ],
@@ -114,7 +114,7 @@
     "time_window_hours": 24
   },
   "webhook": {
-    "enabled": true,
+    "enabled": false,
     "url_env": "HORIZON_WEBHOOK_URL",
     "delivery": "summary_and_items",
     "overview_position": "last",
