@@ -5,283 +5,240 @@ date: 2026-05-07
 lang: zh
 ---
 
-> From 37 items, 14 important content pieces were selected
+> From 28 items, 10 important content pieces were selected
 
 ---
 
-1. [Mozilla 借助 Claude Mythos 强化 Firefox 安全性](#item-1) ⭐️ 9.0/10
-2. [SGLang v0.5.11：升级 CUDA 13 和 Torch 2.11，默认启用推测解码 V2](#item-2) ⭐️ 8.0/10
-3. [AlphaEvolve：Gemini 驱动的编码代理跨领域扩大影响](#item-3) ⭐️ 8.0/10
-4. [Chrome 移除本地 AI 隐私声明](#item-4) ⭐️ 8.0/10
-5. [美国国会图书馆推荐 SQLite 用于数字保存](#item-5) ⭐️ 8.0/10
-6. [AI 工具导致职场产出膨胀](#item-6) ⭐️ 8.0/10
-7. [Valve 以 Creative Commons 许可发布 Steam 控制器 CAD 文件](#item-7) ⭐️ 8.0/10
-8. [氛围编码与代理工程趋于融合](#item-8) ⭐️ 8.0/10
-9. [Anthropic 与 SpaceX 合作获得海量 GPU 算力](#item-9) ⭐️ 8.0/10
-10. [月之暗面融资超 70 亿美元，估值破 1000 亿，Kimi 收入激增](#item-10) ⭐️ 8.0/10
-11. [苹果研发支出占比突破 10%，AI 投入加速硬件平台重塑](#item-11) ⭐️ 8.0/10
-12. [腾讯 Hy3 preview 调用量超 Hy2 十倍，OpenRouter 周榜居首](#item-12) ⭐️ 8.0/10
-13. [小米开源 OmniVoice：支持 646 语种的语音克隆 TTS](#item-13) ⭐️ 8.0/10
-14. [英国 FCA 调查 PayPal、万事达、Visa 数字钱包合约](#item-14) ⭐️ 8.0/10
+1. [Firefox 借助 Claude Mythos 发现数百个漏洞](#item-1) ⭐️ 9.0/10
+2. [Anthropic 与 SpaceX 合作提升 Claude 算力上限](#item-2) ⭐️ 9.0/10
+3. [Chrome 移除设备端 AI 隐私声明](#item-3) ⭐️ 8.0/10
+4. [SQLite 被美国国会图书馆推荐为存储格式](#item-4) ⭐️ 8.0/10
+5. [AI 芯片需求挤压供应，主板销量暴跌 25%](#item-5) ⭐️ 8.0/10
+6. [月之暗面估值超 100 亿美元，完成超 7 亿美元融资](#item-6) ⭐️ 8.0/10
+7. [苹果研发支出占比突破 10%，加速 AI 布局](#item-7) ⭐️ 8.0/10
+8. [腾讯 Hy3 预览版两周调用量超 Hy2 十倍](#item-8) ⭐️ 8.0/10
+9. [Google Cloud 将 reCAPTCHA 升级为 Fraud Defense，加入二维码验证](#item-9) ⭐️ 8.0/10
+10. [小米开源 OmniVoice：极简架构实现 646 语种语音克隆 TTS](#item-10) ⭐️ 8.0/10
 
 ---
 
 <a id="item-1"></a>
-## [Mozilla 借助 Claude Mythos 强化 Firefox 安全性](https://simonwillison.net/2026/May/7/firefox-claude-mythos/#atom-everything) ⭐️ 9.0/10
+## [Firefox 借助 Claude Mythos 发现数百个漏洞](https://simonwillison.net/2026/May/7/firefox-claude-mythos/#atom-everything) ⭐️ 9.0/10
 
-Mozilla 利用 Claude Mythos 预览版 AI 模型发现并修复了 Firefox 中的数百个安全漏洞，月度修复数量从 2025 年的约 20-30 个飙升至 2026 年 4 月的 423 个。 这一突破表明，先进的 LLM 现能显著增强软件安全加固能力，从生成低质量漏洞报告转变为发现高价值漏洞并通过维护者审查，可能改变 AI 辅助漏洞检测的格局。 该 AI 系统结合了更强的模型能力和改进的引导、扩展及堆叠技术，以产生有效信号并过滤噪声。许多尝试被 Firefox 的纵深防御措施拦截，表明模型的发现真实且精确。
+Mozilla 利用 Claude Mythos 预览版配合改进的提示技术，在 2026 年 4 月发现并修复了 Firefox 中的 423 个安全漏洞，而此前每月通常仅修复 20-30 个。 这标志着 AI 生成的安全报告从被视作“垃圾”到大规模发现真实漏洞的范式转变，显著提升了开源软件的安全性。 AI 程序多次被 Firefox 的纵深防御机制阻止，但仍发现了包括 20 年历史的 XSLT 漏洞和 15 年历史的 <legend> 元素漏洞在内的古老缺陷。修复数量从 2025 年的每月 20-30 个跃升至 2026 年 4 月的 423 个。
 
 rss · Simon Willison · May 7, 17:56
 
-**背景**: Claude Mythos 是 Anthropic 于 2026 年发布的最新、最强大的语言模型，在计算机安全任务中表现卓越。传统 AI 生成的漏洞报告常因误报率高而被视为“垃圾”，但 Mythos 的高准确性改变了这一局面。
+**背景**: Claude Mythos Preview 是 Anthropic 于 2026 年 4 月作为 Project Glasswing 一部分发布的最先进的前沿大语言模型。它通过 Claude Code 在隔离容器中以代理方式寻找安全漏洞。此前，AI 生成的安全报告常常错误百出，给维护者带来高昂成本，而近期模型能力和提示技术的改进改变了这一局面。
 
 <details><summary>参考链接</summary>
 <ul>
+<li><a href="https://en.wikipedia.org/wiki/Claude_Mythos_Preview">Claude Mythos Preview</a></li>
 <li><a href="https://red.anthropic.com/2026/mythos-preview/">Claude Mythos Preview \ red.anthropic.com</a></li>
-<li><a href="https://en.wikipedia.org/wiki/Claude_(language_model)">Claude (language model) - Wikipedia</a></li>
 
 </ul>
 </details>
 
-**标签**: `#AI`, `#security`, `#Firefox`, `#vulnerability detection`, `#Claude Mythos`
+**标签**: `#AI`, `#security`, `#Firefox`, `#vulnerability detection`, `#LLM`
 
 ---
 
 <a id="item-2"></a>
-## [SGLang v0.5.11：升级 CUDA 13 和 Torch 2.11，默认启用推测解码 V2](https://github.com/sgl-project/sglang/releases/tag/v0.5.11) ⭐️ 8.0/10
+## [Anthropic 与 SpaceX 合作提升 Claude 算力上限](https://t.me/zaihuapd/41259) ⭐️ 9.0/10
 
-SGLang v0.5.11 升级至 CUDA 13.0 和 PyTorch 2.11，默认启用带重叠调度的推测解码 V2，并为预填充-解码分离新增了解码前缀缓存。同时新增了对 Gemma 4、Qwen3.6、Kimi-K2.6 等多个新模型的支持。 这些更新显著提升了 LLM 推理的性能和兼容性，使 SGLang 在生产部署中更具竞争力。默认的推测解码 V2 降低了 CPU 开销，而解码前缀缓存解决了分离部署中的一个关键限制，提升了吞吐量并减少了首 token 延迟。 推测解码 V2 使用重叠调度器来隐藏 CPU 开销，现已成为 EAGLE、MTP 和 DFLASH 路径的默认配置。解码前缀缓存恢复了预填充-解码分离下的前缀缓存命中率，从而为长共享前缀节省了首 token 时间。
+Anthropic 宣布与 SpaceX（xAI）达成合作，将使用 Colossus 1 数据中心的全部算力，包括超过 22 万块 NVIDIA GPU 和 300 兆瓦新增容量。因此，Claude Code 的速率限制翻倍，Pro 和 Max 用户的高峰期限制被取消，同时 Claude Opus API 的限额也大幅提升。 此次合作为 Anthropic 提供了巨大的算力资源，使其能够扩展 Claude 服务并满足开发者和企业日益增长的需求。这也凸显了大规模 GPU 集群作为 AI 竞争关键基础设施的重要性。 该协议使 Anthropic 独家使用 Colossus 1 数据中心，该中心最初由 xAI 为训练 Grok 而建。新增容量来自 Colossus 1 以及近期与亚马逊和谷歌达成的其他协议。
 
-github · Kangyan-Zhou · May 5, 21:28
+telegram · zaihuapd · May 7, 08:19
 
-**背景**: SGLang 是一个开源 LLM 推理框架，通过前缀缓存（RadixAttention）和推测解码等技术优化推理性能。预填充-解码分离将预填充和解码阶段分到不同进程，以更好地利用 GPU 资源，但此前会破坏前缀缓存；新的解码前缀缓存修复了这一问题。
+**背景**: Colossus 是 xAI 于 2024 年 9 月推出的超级计算机，位于田纳西州孟菲斯，最初拥有 10 万块 NVIDIA H100 GPU，被认为是世界上最大的 AI 超级计算机。Anthropic 开发 Claude 系列 AI 模型，与 OpenAI 的 GPT 和 Google 的 Gemini 竞争。算力是 AI 公司的关键约束，因为训练和运行大型模型需要大量 GPU 和高能耗。
 
 <details><summary>参考链接</summary>
 <ul>
-<li><a href="https://docs.sglang.io/docs/advanced_features/speculative_decoding">Speculative Decoding - SGLang Documentation</a></li>
-<li><a href="https://bentoml.com/llm/inference-optimization/prefill-decode-disaggregation">Prefill-decode disaggregation | LLM Inference Handbook</a></li>
-<li><a href="https://www.lmsys.org/blog/2024-12-04-sglang-v0-4/">SGLang v0.4: Zero-Overhead Batch Scheduler, Cache-Aware Load Balancer, Faster Structured Outputs - LMSYS Blog | LMSYS Org</a></li>
+<li><a href="https://finance.yahoo.com/news/anthropic-to-rent-all-ai-capacity-at-spacexs-colossus-data-center-180327774.html">Anthropic to rent all AI capacity at SpaceX's Colossus data center</a></li>
+<li><a href="https://x.ai/colossus">Colossus: The World's Largest AI Supercomputer | xAI</a></li>
 
 </ul>
 </details>
 
-**标签**: `#sglang`, `#LLM inference`, `#CUDA 13`, `#speculative decoding`, `#release`
+**标签**: `#AI`, `#算力`, `#合作`, `#NVIDIA`, `#Claude`
 
 ---
 
 <a id="item-3"></a>
-## [AlphaEvolve：Gemini 驱动的编码代理跨领域扩大影响](https://deepmind.google/blog/alphaevolve-impact/) ⭐️ 8.0/10
+## [Chrome 移除设备端 AI 隐私声明](https://old.reddit.com/r/chrome/comments/1t5qayz/chrome_removes_claim_of_ondevice_al_not_sending/) ⭐️ 8.0/10
 
-DeepMind 发布了 AlphaEvolve，这是一个由 Gemini 大语言模型驱动的编码代理，能够设计先进算法并解决数学、计算机科学及其他领域的高级优化问题。 AlphaEvolve 展示了 AI 通过优化其运行的算法来自我改进的潜力，这可能加速科学发现和软件开发领域的进步。它也引发了关于基础模型如何在定义明确的高级优化任务中表现出色的讨论。 AlphaEvolve 将进化搜索方法与 Gemini 相结合，用于生成和改进算法，并在涵盖几何学、组合数学和数论的约 50 个精选数学问题上进行了基准测试。该系统侧重于高层次、定义明确的问题空间，而非低级编码。
+谷歌 Chrome 从其文档中删除了一句声明，该声明称设备端 AI 功能不会向谷歌服务器发送数据，此举引发了新的隐私担忧。 此次删除暗示数据现在可能会被发送到服务器，与先前的隐私保证相矛盾，从而削弱了用户信任。它影响了数百万依赖内置 AI 功能的 Chrome 用户。 这一删除是在 Chrome 关于设备端 AI 功能（如 Gemini Nano）的文档中被注意到的，而该功能最近被发现在未经明确同意的情况下悄然向用户设备下载了 4GB 的模型。
 
-hackernews · berlianta · May 7, 15:02 · [社区讨论](https://news.ycombinator.com/item?id=48050278)
+hackernews · newsoftheday · May 7, 15:56 · [社区讨论](https://news.ycombinator.com/item?id=48050964)
 
-**背景**: 编码代理是旨在通过自动化常规任务来帮助开发者编写、调试和优化代码的 AI 助手。AlphaEvolve 扩展了这一概念，利用像 Gemini 这样的 LLM 以进化方式探索解决方案空间，从而有效地进化出新算法。DeepMind 此前曾开发用于排序算法的 AlphaDev，而 AlphaEvolve 则代表了更广泛地应用于数学和科学问题。
+**背景**: 设备端 AI 在用户设备本地运行机器学习模型，以提供写作辅助和诈骗检测等功能，而无需将数据发送到云端。Chrome 的 Gemini Nano 是谷歌用于设备端任务的轻量级 AI 模型，但其静默下载以及现在被删除的隐私声明引发了关于数据收集实践的争议。
 
 <details><summary>参考链接</summary>
 <ul>
-<li><a href="https://en.wikipedia.org/wiki/AlphaEvolve">AlphaEvolve - Wikipedia</a></li>
-<li><a href="https://www.linkedin.com/pulse/deepmind-unveils-alphaevolve-precision-ai-tool-solving-avinash-dubey-qblbc">DeepMind Unveils AlphaEvolve : A Precision AI Tool for Solving Math...</a></li>
-<li><a href="https://github.com/resources/articles/what-are-ai-agents">What are AI agents ? · GitHub</a></li>
+<li><a href="https://www.google.com/chrome/ai-innovations/">Gemini in Chrome | The next generation of AI in Chrome | Chrome</a></li>
+<li><a href="https://developer.chrome.com/docs/ai/get-started">Get started with built-in AI | AI on Chrome | Chrome for Developers</a></li>
+<li><a href="https://www.tomsguide.com/ai/check-your-storage-chrome-may-be-downloading-a-4gb-ai-model-heres-what-we-know">'No clear consent flow for this download': Google Chrome is silently stashing a 4GB AI model on your device — and Google just responded | Tom's Guide</a></li>
 
 </ul>
 </details>
 
-**社区讨论**: 评论者们反应不一：一些人强调了 AI 自我改进和快速进步的潜力，而另一些人则厌倦了反复听到相同的数学问题（如 Erdős 问题）被解决。还有人好奇谷歌工程师自己是否更喜欢 Gemini 而非 Claude Code 或 Codex 等替代品。
+**社区讨论**: 社区评论表达了广泛的不信任，用户指出将 AI 添加到桌面应用是在用户不知情的情况下收集数据的有效方式。有人质疑谷歌是否真的禁用了数据发送，而另一些人则建议改用 Brave 等替代品。
 
-**标签**: `#AI`, `#coding agent`, `#DeepMind`, `#Gemini`, `#optimization`
+**标签**: `#privacy`, `#chrome`, `#google`, `#ai`, `#data-collection`
 
 ---
 
 <a id="item-4"></a>
-## [Chrome 移除本地 AI 隐私声明](https://old.reddit.com/r/chrome/comments/1t5qayz/chrome_removes_claim_of_ondevice_al_not_sending/) ⭐️ 8.0/10
+## [SQLite 被美国国会图书馆推荐为存储格式](https://sqlite.org/locrsf.html) ⭐️ 8.0/10
 
-Google 从 Chrome 文档中移除了关于本地 AI 模型 Gemini Nano 不会向 Google 服务器发送数据的声明，引发了新的隐私担忧。 这一变化削弱了用户对 Chrome 隐私承诺的信任，尤其是考虑到 Gemini Nano 正通过 Chrome 更新积极部署到用户设备上。这可能意味着 Google 在本地 AI 数据处理方式上的转变。 被移除的声明是 Chrome 内置 AI API 文档的一部分，这些 API 使用 Gemini Nano 在本地执行翻译、摘要等任务。此前用户曾对未经明确许可下载的 4GB 'weights.bin' 文件表示担忧。
+美国国会图书馆正式将 SQLite 列为长期数字保存的推荐存储格式。这一认可在 2026 年推荐格式声明中被强调。 这一来自重要保存机构的认可验证了 SQLite 的可靠性和归档适用性，将影响图书馆、机构和开发者的保存实践。它可能鼓励 SQLite 在数据密集型应用中的更广泛采用，并增强对其长期可行性的信任。 SQLite 是美国国会图书馆为数据集存储推荐的四种格式之一，属于其数字保存的“推荐格式声明”。该推荐针对数据集，而非通用文件格式。
 
-hackernews · newsoftheday · May 7, 15:56 · [社区讨论](https://news.ycombinator.com/item?id=48050964)
+hackernews · whatisabcdefgh · May 6, 21:58 · [社区讨论](https://news.ycombinator.com/item?id=48042434)
 
-**背景**: Chrome 的本地 AI 功能依赖于 Gemini Nano，这是一个轻量级 AI 模型，旨在用户设备上本地运行，通过避免云端处理来提升隐私。Google 此前承诺该本地模型不会向服务器发送用户数据。移除这一承诺动摇了 Chrome AI 功能的隐私保障。
+**背景**: 美国国会图书馆维护一份推荐格式列表，以确保数字内容长期可访问。SQLite 是一个自包含、无服务器的数据库引擎，以其简单、可靠和零配置而广泛应用于各类应用。被推荐意味着它符合开放性、稳定性、广泛采用和无专有限制等标准。
 
 <details><summary>参考链接</summary>
 <ul>
-<li><a href="https://www.androidauthority.com/google-chrome-weights-bin-ai-model-download-explained-3664043/">The truth behind Chrome 's 4GB 'weights.bin' Gemini Nano file</a></li>
-<li><a href="https://developer.chrome.com/docs/ai/get-started">Get started with built-in AI | AI on Chrome | Chrome for Developers</a></li>
-<li><a href="https://indianexpress.com/article/technology/tech-news-technology/google-chrome-downloads-4gb-gemini-ai-model-onto-your-devices-without-permission-report-10677956/">Google Chrome downloads 4GB Gemini AI model onto your devices ...</a></li>
+<li><a href="https://en.wikipedia.org/wiki/SQLite">SQLite - Wikipedia</a></li>
+<li><a href="https://thecodersblog.com/sqlite-as-recommended-storage-format-2026/">SQLite: Library of Congress Recommended for Digital Preservation</a></li>
 
 </ul>
 </details>
 
-**社区讨论**: 评论者表达了对 Google 的不信任，有人推荐 Brave 等更注重隐私的替代浏览器。其他人则质疑这对基于 Chromium 的浏览器的影响，指出 Brave 自家的 AI 'Leo' 也存在隐私问题。总体情绪充满怀疑，有用户表示‘我们不能信任 Google’。
+**社区讨论**: 社区评论反映了不同观点：有人赞赏 SQLite 的简洁性，但担心便携文件中可能包含个人身份信息；而另一些人承认从最初认为它是玩具到如今广泛使用的转变。一位用户指出该公告来自 2018 年，但这一认可仍然具有现实意义。
 
-**标签**: `#privacy`, `#google chrome`, `#on-device AI`, `#data collection`, `#trust`
+**标签**: `#sqlite`, `#digital preservation`, `#databases`, `#data storage`
 
 ---
 
 <a id="item-5"></a>
-## [美国国会图书馆推荐 SQLite 用于数字保存](https://sqlite.org/locrsf.html) ⭐️ 8.0/10
+## [AI 芯片需求挤压供应，主板销量暴跌 25%](https://www.tomshardware.com/pc-components/motherboards/motherboard-sales-collapse-by-more-than-25-percent-as-chipmakers-strangle-enthusiast-pc-market-to-build-more-ai-chips-asus-projected-to-sell-5-million-fewer-boards-in-2025-gigabyte-msi-and-asrock-also-expected-to-see-reduced-sales-numbers) ⭐️ 8.0/10
 
-美国国会图书馆将 SQLite 正式列为数字保存的优选存储格式，作为其 2026 年推荐格式的一部分。 来自重要文化机构的认可验证了 SQLite 的可靠性和持久性，鼓励在档案和数据保存领域更广泛地采用。 该推荐出现在美国国会图书馆的 2026 年推荐存储格式页面上，列出了各种数据类型的优选格式。
+由于芯片制造商优先生产 AI 芯片而非消费级 PC 组件，主板销量暴跌超过 25%，预计华硕在 2025 年将少售 500 万块主板，技嘉、微星和华擎等其他主要厂商也预期销量下降。 这一转变标志着 PC 硬件行业的根本性调整——AI 需求不仅推高了组件价格，还减少了消费级硬件的供应和创新，可能迫使发烧友离开 PC 平台。 短缺不仅限于主板，还波及机箱、风扇、消费级 SSD 等 PC 配件，芯片制造商将晶圆厂产能转向利润率更高的 AI 芯片，供应紧张预计将持续到 2027 年。
 
-hackernews · whatisabcdefgh · May 6, 21:58 · [社区讨论](https://news.ycombinator.com/item?id=48042434)
+hackernews · speckx · May 7, 15:23 · [社区讨论](https://news.ycombinator.com/item?id=48050540)
 
-**背景**: SQLite 是一个自包含、无服务器、零配置的 SQL 数据库引擎，广泛应用于嵌入式系统和应用程序。它将整个数据库存储为单一的跨平台文件，便于存档和保存。
+**背景**: 主板连接所有 PC 组件，是组装台式机的核心。近年来，新一代 CPU/GPU 的性能提升递减，削弱了升级动力。与此同时，AI 热潮挤占了芯片制造产能，导致消费级 PC 使用的常规内存和逻辑芯片短缺并涨价。
 
-**社区讨论**: 评论者对 SQLite 的简洁性和可靠性表示赞赏，但有些人指出在企业环境中存在潜在误用，即数据库文件可能被随意复制并包含敏感数据。一位评论者指出，国会图书馆的推荐可以追溯到 2018 年，因此这条新闻并不像看起来那么新。
+<details><summary>参考链接</summary>
+<ul>
+<li><a href="https://sourceability.com/post/ai-chip-shortages-deepen-amid-tariff-risks">AI demand sparks memory supply chain strain | Sourceability</a></li>
+<li><a href="https://wccftech.com/amd-warns-pc-gaming-demand-will-decline-in-h2-as-memory-prices-surge/">AMD Warns PC & Gaming Demand Will Decline In H2 As Memory...</a></li>
 
-**标签**: `#SQLite`, `#data storage`, `#digital preservation`, `#open source`, `#database`
+</ul>
+</details>
+
+**社区讨论**: 评论者感叹 PC 硬件价格飙升——主板从 100-200 美元涨至 300 美元以上，且性能提升递减使升级缺乏动力。有人指出一个悖论：AI 既导致短缺，又减少了人们对强大 PC 的需求，因为任务转移到了云端。
+
+**标签**: `#AI`, `#PC Hardware`, `#Supply Chain`, `#Market Trends`, `#Consumer Electronics`
 
 ---
 
 <a id="item-6"></a>
-## [AI 工具导致职场产出膨胀](https://nooneshappy.com/article/appearing-productive-in-the-workplace/) ⭐️ 8.0/10
+## [月之暗面估值超 100 亿美元，完成超 7 亿美元融资](https://t.me/zaihuapd/41251) ⭐️ 8.0/10
 
-这篇文章批评了 AI 工具如何导致职场中出现膨胀且肤浅的生产力产出，稀释了专家判断，并造成了一种冗长文化。 这削弱了职场沟通的真实性，并可能侵蚀真正的专业知识，尤其是在软件工程等领域，清晰简洁的沟通本应受到重视。 文章指出需求文档、状态更新等工作产出变得不必要的冗长，甚至专家也因依赖 AI 而产出看似反常的工作。
+月之暗面完成新一轮超 7 亿美元融资，估值突破 100 亿美元，仅用两年多时间成为“十角兽”；其 AI 助手 Kimi 近 20 天累计收入已超过 2025 年全年总额。 这一里程碑显示了中国 AI 初创公司强大的投资者信心，以及大语言模型快速商业化的能力；Kimi 海外收入已超过国内，表明其全球竞争力。 本轮融资由阿里、腾讯、五源资本和九安医疗联合领投，累计融资超 12 亿美元；Kimi 的 K2.5 模型支持多达 100 个专业智能体协同的 Agent Swarm 技术，已在 OpenRouter 上线，推动了收入增长。
 
-hackernews · diebillionaires · May 6, 16:18 · [社区讨论](https://news.ycombinator.com/item?id=48038001)
+telegram · zaihuapd · May 7, 00:30
 
-**社区讨论**: 评论者强烈认同产出膨胀和专业知识稀释的观点。有评论分享了一位架构师使用 AI 过度设计系统的经历，另一评论指出 LLM 已自动化了讨好管理层的行为。
+**背景**: 月之暗面是中国 AI 初创公司，以 Kimi 助手和 K2.5 大语言模型闻名。“十角兽”指估值超过 100 亿美元的初创企业。OpenRouter 是一个提供多模型统一 API 访问的平台，包括 K2.5。
 
-**标签**: `#AI`, `#workplace culture`, `#productivity`, `#software engineering`
+<details><summary>参考链接</summary>
+<ul>
+<li><a href="https://github.com/MoonshotAI/Kimi-K2.5">GitHub - MoonshotAI/Kimi-K2.5: Moonshot's most powerful model · GitHub</a></li>
+<li><a href="https://huggingface.co/moonshotai/Kimi-K2.5">moonshotai/Kimi-K2.5 · Hugging Face</a></li>
+<li><a href="https://www.codecademy.com/article/kimi-k-2-5-complete-guide-to-moonshots-ai-model">Kimi K2.5: Complete Guide to Moonshot's AI Model | Codecademy</a></li>
+<li><a href="https://openrouter.ai/">OpenRouter</a></li>
+
+</ul>
+</details>
+
+**标签**: `#AI startup`, `#funding`, `#Moonshot AI`, `#Kimi`, `#valuation`
 
 ---
 
 <a id="item-7"></a>
-## [Valve 以 Creative Commons 许可发布 Steam 控制器 CAD 文件](https://www.digitalfoundry.net/news/2026/05/valve-releases-steam-controller-cad-files-under-creative-commons-license) ⭐️ 8.0/10
+## [苹果研发支出占比突破 10%，加速 AI 布局](https://www.cnbc.com/2026/05/06/apples-rd-spending-climbs-to-10percent-of-revenue-on-ai-investments.html) ⭐️ 8.0/10
 
-Valve 已以 Creative Commons 许可发布了 Steam 控制器外壳和 Steam Controller Puck 的 CAD 文件，允许用户 3D 打印、修改和制作自定义配件。 这一开放硬件举措推动了改造、无障碍适配（例如针对残障玩家）和第三方配件的发展，减少了对专有部件的依赖，并促进了社区创新。 发布的文件包括 STP、STL 模型以及带有关键特征和禁止区域的工程图纸。该控制器近期重新发售但迅速售罄，黄牛以高价转卖。
+苹果 2026 年 3 月财季研发支出占营收比例升至 10.3%，为 30 年来首次突破 10%，同比增长 34%，主要投入 AI 领域。 这一里程碑标志着苹果战略转向以 AI 为核心平台重塑硬件生态，类似于 iPod 时代，将影响其端侧 AI、自研芯片和私有云计算等关键方向。 苹果正大力投入端侧 AI、自研芯片（如用于私有云计算的 M5 芯片），以及 AI 眼镜和带摄像头的 AirPods 等新产品，此外还有首款折叠屏 iPhone 和 Siri 升级。
 
-hackernews · haunter · May 6, 15:44 · [社区讨论](https://news.ycombinator.com/item?id=48037555)
+telegram · zaihuapd · May 7, 01:00
 
-**背景**: Steam 控制器是 Valve 设计的游戏控制器，具有独特的触摸板和可自定义输入。CAD（计算机辅助设计）文件允许精确的 3D 打印修改。Creative Commons 许可允许在注明出处的情况下自由分享和改编。
+**背景**: 端侧 AI 是指在本地设备上直接运行人工智能算法，相比云端 AI 能降低延迟并提升隐私性。苹果的私有云计算（PCC）使用搭载自研芯片的专用服务器，在处理敏感 AI 任务时保护用户隐私。这些技术是苹果将 AI 深度整合进硬件生态的关键。
 
-**社区讨论**: 评论称赞了友好的 README 文件，并强调了该文件对需要自定义控制器的残障玩家的好处。有人对近期销售中的黄牛现象表示担忧，还有用户批评该控制器仅支持 Steam 的做法是走向封闭生态的一步。
+<details><summary>参考链接</summary>
+<ul>
+<li><a href="https://finance.sina.com.cn/stock/t/2025-12-10/doc-inhaicsz1972147.shtml">概念研究所-什么是AI端侧？|AI_新浪财经_新浪网</a></li>
+<li><a href="https://semiconductor.samsung.cn/technologies/processor/on-device-ai/">端侧AI | 技术 | 三星半导体官网</a></li>
+<li><a href="https://stock.10jqka.com.cn/usstock/20260218/c674837048.shtml">消息称 苹 果 AI 私 有 云 端 算 力大跃进：跳过 M3 和 M4，直接部署 M5 芯片</a></li>
 
-**标签**: `#open hardware`, `#3d printing`, `#steam controller`, `#creative commons`, `#accessibility`
+</ul>
+</details>
+
+**标签**: `#Apple`, `#AI`, `#研发`, `#硬件生态`
 
 ---
 
 <a id="item-8"></a>
-## [氛围编码与代理工程趋于融合](https://simonwillison.net/2026/May/6/vibe-coding-and-agentic-engineering/#atom-everything) ⭐️ 8.0/10
+## [腾讯 Hy3 预览版两周调用量超 Hy2 十倍](https://finance.sina.com.cn/tech/shenji/2026-05-07/doc-inhwzrtp8521239.shtml) ⭐️ 8.0/10
 
-著名软件开发者 Simon Willison 在播客中描述，他此前对“氛围编码”与“代理工程”的清晰区分已开始模糊，因为他越来越依赖 AI 编码代理，甚至在生产系统中也不再逐行审阅代码。 这种融合挑战了 AI 在软件开发中的负责任使用，尤其是在服务他人的生产软件中，未经检查的 AI 生成代码可能引入安全漏洞和错误。 Willison 指出，对于像构建带 SQL 查询的 JSON API 端点这类简单重复任务，Claude Code 等代理能可靠地生成正确代码，导致他跳过审查并感到内疚。
-
-rss · Simon Willison · May 6, 14:24 · [社区讨论](https://news.ycombinator.com/item?id=48037128)
-
-**背景**: “氛围编码”由 Andrej Karpathy 于 2025 年 2 月提出，是一种 AI 辅助实践，开发者不经仔细审查就接受 AI 生成的代码。“代理工程”由 Willison 推广，指专业软件工程师使用 AI 代理提升代码质量和生产力，同时保持监督。这两种实践的模糊化引发了对生产环境中负责任使用 AI 边界的思考。
-
-<details><summary>参考链接</summary>
-<ul>
-<li><a href="https://en.wikipedia.org/wiki/Vibe_coding">Vibe coding</a></li>
-<li><a href="https://medium.com/@telumai/there-was-prompt-engineering-then-vibe-coding-now-agentic-engineering-7da779d1cb63">There Was Prompt Engineering Then Vibe Coding Now Agentic ...</a></li>
-
-</ul>
-</details>
-
-**社区讨论**: 评论者指出，AI 能力呈锯齿形前沿，对某些任务有效但对其他任务无效。他们认为氛围编码和 LLM 并非创造了不规范的实践，而是暴露并加速了已有的松散标准。还有评论警告，随着 AI 可靠性提高，其错误变得更细微且更难发现。
-
-**标签**: `#AI coding tools`, `#vibe coding`, `#agentic engineering`, `#software engineering practices`, `#LLM`
-
----
-
-<a id="item-9"></a>
-## [Anthropic 与 SpaceX 合作获得海量 GPU 算力](https://www.anthropic.com/news/higher-limits-spacex) ⭐️ 8.0/10
-
-Anthropic 宣布与 SpaceX 合作，使用 Colossus 1 数据中心的全部算力，一个月内可新增超过 300 兆瓦容量和 22 万块 NVIDIA GPU。即日起，Claude Code 所有付费方案的速率限制翻倍，Pro/Max 用户的高峰期限制取消，Claude Opus 的 API 速率限制也大幅提高。 此次合作大幅提升了 Anthropic 的算力，加速模型训练和推理，并通过更高的使用限制直接改善用户体验。它突显了大规模基础设施合作在竞争激烈的 AI 领域中的关键作用。 Colossus 1 是 xAI 位于田纳西州孟菲斯的数据中心，专为 AI 工作负载设计。该合作提供超过 300 兆瓦和 22 万块 GPU，Claude Code 的 5 小时速率限制翻倍，Pro/Max 用户的高峰期限制取消。
-
-telegram · zaihuapd · May 6, 16:35
-
-**背景**: Colossus 1 是 Elon Musk 旗下 xAI 公司建造的大型 AI 数据中心，配备了数十万块 NVIDIA GPU。Anthropic 开发 Claude 系列大语言模型，训练和推理需要海量计算资源。此次合作帮助 Anthropic 获得所需的算力以扩展服务。
-
-<details><summary>参考链接</summary>
-<ul>
-<li><a href="https://www.democracynow.org/2026/4/22/memphis_xai_data_center_pollution_keshaun">“ Colossus Failure”: Elon Musk’s Data Centers ... | Democracy Now!</a></li>
-<li><a href="https://www.datacenterfrontier.com/machine-learning/article/55244139/the-colossus-ai-supercomputer-elon-musks-drive-toward-data-center-ai-technology-domination">datacenterfrontier.com/machine-learning/article/55244139/the...</a></li>
-
-</ul>
-</details>
-
-**标签**: `#Anthropic`, `#SpaceX`, `#Claude`, `#GPU`, `#compute partnership`
-
----
-
-<a id="item-10"></a>
-## [月之暗面融资超 70 亿美元，估值破 1000 亿，Kimi 收入激增](https://t.me/zaihuapd/41251) ⭐️ 8.0/10
-
-2 月 23 日，中国 AI 初创公司月之暗面完成新一轮超 7 亿美元融资，由阿里、腾讯等联合领投，估值突破 100 亿美元。其 Kimi 模型近 20 天累计收入已超 2025 年全年总额，且海外收入已超过国内。 这轮融资和收入里程碑凸显了中国 AI 初创公司在竞争激烈的大模型领域的快速成长和全球吸引力，可能重塑市场格局并吸引更多投资。 月之暗面累计融资额已超 12 亿美元，仅用两年多时间便成为国内晋级最快的“十角兽”企业。K2.5 模型在 OpenRouter 上推动了 API 调用量和付费用户的显著增长。
-
-telegram · zaihuapd · May 7, 00:30
-
-**背景**: 月之暗面是一家专注于大语言模型（LLM）的知名中国初创公司，以其 Kimi 系列闻名。该公司在快速发展的 AI 领域与百度、阿里巴巴等国内玩家竞争。“十角兽”指估值超过 100 亿美元的初创企业。
-
-**标签**: `#AI startup`, `#fundraising`, `#LLM`, `#Chinese tech`, `#valuation`
-
----
-
-<a id="item-11"></a>
-## [苹果研发支出占比突破 10%，AI 投入加速硬件平台重塑](https://www.cnbc.com/2026/05/06/apples-rd-spending-climbs-to-10percent-of-revenue-on-ai-investments.html) ⭐️ 8.0/10
-
-苹果 2026 年 3 月财季研发支出占营收比例升至 10.3%，为 30 年来首超 10%，主要由加速的 AI 投资驱动。 这一历史性的研发支出增长标志着苹果向 AI 的迫切转型，可能重塑其硬件生态和后 iPhone 时代的竞争地位。 尽管营收增长 17%，但研发投入飙升 34%，重点集中在端侧 AI、自研芯片和私有云计算，以及 AI 眼镜和带摄像头的 AirPods 等产品。
-
-telegram · zaihuapd · May 7, 01:00
-
-**背景**: 研发支出占营收的比例是衡量公司未来创新投入的关键指标。苹果历史上一直将这一比例保持在 10%以下，但随着 AI 竞赛加剧，公司正进行战略转向，将 AI 深度整合进硬件中。
-
-**标签**: `#Apple`, `#AI`, `#R&D`, `#Hardware`, `#Strategy`
-
----
-
-<a id="item-12"></a>
-## [腾讯 Hy3 preview 调用量超 Hy2 十倍，OpenRouter 周榜居首](https://finance.sina.com.cn/tech/shenji/2026-05-07/doc-inhwzrtp8521239.shtml) ⭐️ 8.0/10
-
-腾讯 Hy3 preview 模型上线仅两周，Token 调用量已达上一代 Hy2 模型的 10 倍以上，并在 OpenRouter 周榜的总榜和市场占有率上双双登顶。 这一快速普及表明 Hy3 preview 在性能和效率上的强劲表现，得到了 OpenRouter 开放社区的验证，并使腾讯在大语言模型领域成为一股有竞争力的力量，特别是在智能体与编程场景中。 Hy3 preview 是一个 295B 参数的混合专家（MoE）模型，仅有 21B 活跃参数，支持最高 256K 上下文长度，使其在生产使用中非常高效。在腾讯内部的 WorkBuddy、Codebuddy 等应用中，代码与智能体场景的 Token 处理量增长超过 16.5 倍。
+腾讯混元 Hy3 preview 模型（295B 参数 MoE 架构）上线两周后，Token 调用量达到上一代 Hy2 的十倍，并在 OpenRouter 周榜中排名第一。 这一快速采用表明腾讯最新 AI 模型在编程和智能体工作流等领域具有强大的产品-市场契合度，也凸显了高效 MoE 模型在生产部署中日益增长的重要性。 Hy3 preview 是一个 295B 参数的 MoE 模型，但仅有 21B 活跃参数和 3.8B MTP 层，支持高效推理。它提供可配置的推理级别（关闭、低、高），并在 OpenRouter 上临时免费以收集真实场景反馈。
 
 telegram · zaihuapd · May 7, 05:34
 
-**背景**: Hy3 preview 是腾讯在重建的基础设施上训练的首个模型，专为智能体工作流和长程推理设计。OpenRouter 是一个统一的 API 平台，通过单一接口为开发者提供 300 多种 AI 模型的访问，其周榜反映了来自数千个应用的真实使用模式。混合专家（MoE）是一种神经网络架构，每个 Token 仅激活部分参数，从而以较低的算力成本实现高性能。
+**背景**: 混合专家（MoE）模型每次只激活部分参数，在模型容量与计算成本间取得平衡。腾讯 Hy3 preview 是公司重建训练基础设施后的首个模型。OpenRouter 是一个统一 API 平台，汇集了来自不同提供商的数百个大型语言模型。
 
 <details><summary>参考链接</summary>
 <ul>
 <li><a href="https://huggingface.co/tencent/Hy3-preview">tencent / Hy 3 - preview · Hugging Face</a></li>
 <li><a href="https://openrouter.ai/tencent/hy3-preview:free">Hy 3 preview (free) - API Pricing & Providers | OpenRouter</a></li>
-<li><a href="https://openrouter.ai/about">About - The Unified Interface For LLMs | OpenRouter</a></li>
+<li><a href="https://docs.clore.ai/guides/language-models/hy3-preview">Hy 3 Preview ( Tencent Hunyuan 3, 295B MoE) | Guides | Clore.ai</a></li>
 
 </ul>
 </details>
 
-**标签**: `#AI`, `#Tencent`, `#large language model`, `#model performance`, `#technology`
+**标签**: `#AI`, `#machine learning`, `#Tencent`, `#model deployment`, `#OpenRouter`
 
 ---
 
-<a id="item-13"></a>
-## [小米开源 OmniVoice：支持 646 语种的语音克隆 TTS](https://mp.weixin.qq.com/s/TCS_Sd10g_rvf1cszw673A) ⭐️ 8.0/10
+<a id="item-9"></a>
+## [Google Cloud 将 reCAPTCHA 升级为 Fraud Defense，加入二维码验证](https://support.google.com/recaptcha/answer/16609652?hl=en) ⭐️ 8.0/10
 
-小米开源了 OmniVoice，一个大规模多语言语音克隆 TTS 模型，采用极简双向 Transformer 架构，支持 646 种语言。 这一开源发布使高质量多语言 TTS 和语音克隆技术更加普及，在 24 语种测试中超越商用系统，并具备强大的零样本跨语言克隆能力。 OmniVoice 基于 50 个开源数据集构建了 58 万小时的训练数据，在 PyTorch 上推理速度可达 40 倍实时，其权重、训练和推理代码均已开源。
+Google Cloud 宣布推出 Fraud Defense，作为 reCAPTCHA 的下一代演进，新增二维码挑战，用于验证网站和应用中的人类存在。 这一升级将广泛使用的机器人检测工具提升为抵御 AI 驱动欺诈的能力，采用新颖且用户友好的验证方法，影响整个网络的安全。 二维码验证要求用户用手机扫描二维码；兼容 Android Google Play Services 25.41.30+、iOS/iPadOS 15.0+，且“点击验证”按钮有特定版本要求。
 
-telegram · zaihuapd · May 7, 10:06
+telegram · zaihuapd · May 7, 09:18
 
-**背景**: TTS（文本转语音）系统将文本转换为语音音频。语音克隆 TTS 能够仅凭几秒参考音频模仿特定说话人的声音。OmniVoice 极致的多语言能力（646 种语言）和零样本克隆使其备受关注。
+**背景**: reCAPTCHA 是 Google 的 CAPTCHA 系统，用于区分人类和机器人。Fraud Defense 将其扩展为面向智能体网络的全面信任平台，提供风险评分和取证理由以自动化安全策略。
 
 <details><summary>参考链接</summary>
 <ul>
-<li><a href="https://omnivoice.app/">OmniVoice : Free AI Voice Generator & Voice Cloning</a></li>
-<li><a href="https://huggingface.co/k2-fsa/OmniVoice">k2-fsa/ OmniVoice · Hugging Face</a></li>
+<li><a href="https://cloud.google.com/security/products/fraud-defense">Google Cloud Fraud Defense - The evolution of reCAPTCHA.</a></li>
+<li><a href="https://cloud.google.com/blog/products/identity-security/introducing-google-cloud-fraud-defense-the-next-evolution-of-recaptcha">Introducing Google Cloud Fraud Defense , the... | Google Cloud Blog</a></li>
 
 </ul>
 </details>
 
-**标签**: `#TTS`, `#voice cloning`, `#open source`, `#multilingual`, `#xiaomi`
+**标签**: `#security`, `#reCAPTCHA`, `#fraud prevention`, `#Google Cloud`, `#QR code`
 
 ---
 
-<a id="item-14"></a>
-## [英国 FCA 调查 PayPal、万事达、Visa 数字钱包合约](https://www.fca.org.uk/news/press-releases/competition-act-1998-investigations) ⭐️ 8.0/10
+<a id="item-10"></a>
+## [小米开源 OmniVoice：极简架构实现 646 语种语音克隆 TTS](https://mp.weixin.qq.com/s/TCS_Sd10g_rvf1cszw673A) ⭐️ 8.0/10
 
-英国金融行为监管局（FCA）对 PayPal、万事达和 Visa 启动反竞争调查，重点关注 PayPal 数字钱包相关的合同条款。FCA 尚未就是否违反竞争法得出结论。 这项调查可能重塑英国数字钱包市场格局，该市场交易占比在过去一年从 8%跃升至 29%。它可能影响竞争、创新和新进入者的市场准入。 调查特别针对可能限制竞争的合同条款。三家公司均表示将配合 FCA 的调查。
+小米开源了 OmniVoice 多语言文本转语音（TTS）模型，采用极简双向 Transformer 架构，支持 646 种语言，训练速度达每天 10 万小时，PyTorch 推理速度达 40 倍实时，合成质量优于同类主流模型。 此次开源使得高质量多语言 TTS 技术普及化，开发者和研究者无需大量专有数据即可构建覆盖众多语言的语音应用。同时，它填补了开源社区在高扩展性、高效率且具有竞争力的多语言 TTS 系统方面的空白。 该模型采用全码本随机掩蔽技术，并利用预训练大语言模型参数提升训练效率和可懂度。它在 50 个开源数据集的 58 万小时数据上训练，在 24 种语言上超越商用系统，在 102 种语言上接近真实语音。
 
-telegram · zaihuapd · May 7, 14:46
+telegram · zaihuapd · May 7, 10:06
 
-**背景**: 数字钱包允许用户在移动设备上存储支付卡信息并进行非接触式支付。英国数字钱包市场增长迅速，其交易占比从 2023 年的 8%跃升至当前的 29%。FCA 正在调查某些合同条款是否阻碍了数字钱包提供商之间的竞争。
+**背景**: 文本转语音（TTS）技术将文字转化为语音。多语言 TTS 模型由于数据稀缺和语音多样性而面临挑战。OmniVoice 采用简洁的 Transformer 设计，结合大语言模型技术，实现了广泛的语言覆盖和高效率。
 
-**标签**: `#反垄断`, `#数字钱包`, `#支付监管`, `#金融科技`, `#英国FCA`
+<details><summary>参考链接</summary>
+<ul>
+<li><a href="https://www.emergentmind.com/topics/full-codebook-random-masking">Full - Codebook Random Masking</a></li>
+<li><a href="https://github.com/soobinseo/Transformer-TTS/blob/master/module.py">Transformer - TTS /module.py at master · soobinseo/ Transformer - TTS</a></li>
+
+</ul>
+</details>
+
+**标签**: `#TTS`, `#multilingual`, `#open source`, `#speech synthesis`, `#Xiaomi`
 
 ---
